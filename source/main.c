@@ -13,8 +13,8 @@ int main(int argc, char* argv[])
     contextData.minimalGLXVersionMinor = 3;
     contextData.minimalGLVersionMajor = 3;
     contextData.minimalGLVersionMinor = 3;
-    contextData.windowWidth = 400;
-    contextData.windowHeight = 400;
+    contextData.windowWidth = 1920;
+    contextData.windowHeight = 1080;
     contextData.name = "Faith";
 
     configureOpenGL(&contextData);
