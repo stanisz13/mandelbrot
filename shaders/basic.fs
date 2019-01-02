@@ -11,7 +11,7 @@ void main()
 	pos.y += 0.75f;
 	pos.y /= 1920.0f / 1080.0f;
 	
-	int maxLoop = (1<<8);
+	int maxLoop = (1<<7);
 	vec2 c = pos;
 	vec2 z = vec2(0.0f, 0.0f);
 	vec3 color = vec3(0.0f, 0.0f, 0.0f);
@@ -39,7 +39,7 @@ void main()
 	float val2 = mix(0.0f, 1.0f, float(floor(i) + 1.0f)/maxLoop);
 
 	vec3 color1 = vec3(0.0f, val1, 0.0f);
-	vec3 color2 = vec3(val2, 0.0f, 0.0f);
+	vec3 color2 = vec3(0.0f, val1/2, val2);
 	
 	color = mix(color1, color2, i / maxLoop);
 //	color = vec3(color1);
