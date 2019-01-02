@@ -11,14 +11,14 @@ void main()
 	pos.y += 0.75f;
 	pos.y /= 1920.0f / 1080.0f;
 	
-	int maxLoop = 50;
+	int maxLoop = (1<<8);
 	vec2 c = pos;
 	vec2 z = vec2(0.0f, 0.0f);
 	vec3 color = vec3(0.0f, 0.0f, 0.0f);
 	float escapeRadius = 2.0f;
 	float ERSQUARED = escapeRadius * escapeRadius;
 	
-	int i;
+	float i;
 	
 	for (i = 0; i < maxLoop && dot(z, z) <= ERSQUARED; ++i)
 	{
@@ -27,7 +27,23 @@ void main()
 		z.x = xtemp; 
 	}
 
-	color.b = mix(0.0f, 1.0f, float(i)/maxLoop);
+	if ( i < maxLoop )
+     	{
+		float log_zn = log( z.x*z.x + z.y*z.y ) / 2.0f;
+		float nu = log( log_zn / log(2) ) / log(2);
+
+		i = i + 1 - nu;
+	}
+	
+	float val1 = mix(0.0f, 1.0f, float(floor(i))/maxLoop);
+	float val2 = mix(0.0f, 1.0f, float(floor(i) + 1.0f)/maxLoop);
+
+	vec3 color1 = vec3(0.0f, val1, 0.0f);
+	vec3 color2 = vec3(val2, 0.0f, 0.0f);
+	
+	color = mix(color1, color2, i / maxLoop);
+//	color = vec3(color1);
+	//color.b = mix(0.0f, 1.0f, float(i)/maxLoop);
 
 	FragColor = vec4(color, 1.0f);
 }
