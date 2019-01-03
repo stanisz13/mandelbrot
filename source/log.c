@@ -26,3 +26,8 @@ void newLine()
 {
     printf("\n");
 }
+
+void logWarning(const char* s)
+{
+    printf("[WARNING]: %s\n", s);
+}

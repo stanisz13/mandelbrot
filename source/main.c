@@ -17,7 +17,9 @@ int main(int argc, char* argv[])
     contextData.windowHeight = 1080;
     contextData.name = "Faith";
 
-    configureOpenGL(&contextData);
+    UserVSyncData userVSyncData;
+
+    configureOpenGL(&contextData, &userVSyncData);
     loadFunctionPointers();
 
     
@@ -35,9 +37,7 @@ int main(int argc, char* argv[])
 
     glDisable(GL_DEPTH_TEST);
 
-#if V_SYNC == 0
-    glXSwapIntervalMESA_FA(0);
-#endif
+    disableVSyncIfPossible(&contextData, &userVSyncData);
     
     while(1)
     {        
