@@ -11,7 +11,7 @@ void main()
 	pos.y += 0.75f;
 	pos.y /= 1920.0f / 1080.0f;
 	
-	int maxLoop = (1<<7);
+	int maxLoop = (1<<8);
 	vec2 c = pos;
 	vec2 z = vec2(0.0f, 0.0f);
 	vec3 color = vec3(0.0f, 0.0f, 0.0f);
@@ -29,8 +29,10 @@ void main()
 
 	if ( i < maxLoop )
      	{
-		float log_zn = log( z.x*z.x + z.y*z.y ) / 2.0f;
-		float nu = log( log_zn / log(2) ) / log(2);
+		float diff = z.x*z.x + z.y*z.y; 
+		float log_zn = log(diff) / 2.0f;
+		const float two = 2.0f;
+		float nu = log( log_zn / log(two) ) / log(two);
 
 		i = i + 1 - nu;
 	}
@@ -38,11 +40,10 @@ void main()
 	float val1 = mix(0.0f, 1.0f, float(floor(i))/maxLoop);
 	float val2 = mix(0.0f, 1.0f, float(floor(i) + 1.0f)/maxLoop);
 
-	vec3 color1 = vec3(0.0f, val1, 0.0f);
-	vec3 color2 = vec3(0.0f, val1/2, val2);
+	vec3 color1 = vec3(val2, 0.0f, 0.0f);
+	vec3 color2 = vec3(0.0f,val1/2.0f,  0.0f);
 	
 	color = mix(color1, color2, i / maxLoop);
-//	color = vec3(color1);
 	//color.b = mix(0.0f, 1.0f, float(i)/maxLoop);
 
 	FragColor = vec4(color, 1.0f);
