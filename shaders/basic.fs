@@ -9,7 +9,7 @@ const float aRatio = 1080.0f / 1920.0f;
 float minRe = -1.0f;
 float maxRe = 1.0f;
 
-const float zoom = 1000.0f;
+const float zoom = 100.0f;
 
 vec2 mapPoint(const vec2 v)
 {
