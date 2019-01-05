@@ -53,6 +53,18 @@ int main(int argc, char* argv[])
                         isRunning = 0;
                     break;
             }
+
+            glClearColor(0, 0.5, 1, 1);
+            glClear(GL_COLOR_BUFFER_BIT);
+
+#if USE_EBO_TO_DRAW_QUAD == 1
+            glDrawElements(GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_INT, 0);
+#else
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+#endif
+        
+            glXSwapBuffers(contextData.display, contextData.window);
+
         }
 
         if (isRunning == 0)
@@ -60,16 +72,6 @@ int main(int argc, char* argv[])
             break;
         }
 
-        glClearColor(0, 0.5, 1, 1);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-#if USE_EBO_TO_DRAW_QUAD == 1
-        glDrawElements(GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_INT, 0);
-#else
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-#endif
-        
-        glXSwapBuffers(contextData.display, contextData.window);
         
         //sleep(1);
     }
