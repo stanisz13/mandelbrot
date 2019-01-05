@@ -4,12 +4,27 @@ in vec2 posPass;
 
 out vec4 FragColor;
 
+const float aRatio = 1920.0f / 1080.0f;
+const float zoom = 2.0f;
+
+vec2 mapPoint(const vec2 v)
+{
+	vec2 res;
+	res = v * 1.75f - 0.75f;
+	res.y += 0.75f;
+	res.y /= aRatio;
+
+	res.y /= zoom;
+	res.x /= zoom;
+
+	return res;
+}
+
 void main()
 {
 	vec2 pos = posPass;
-	pos = pos * 1.75f - 0.75f;
-	pos.y += 0.75f;
-	pos.y /= 1920.0f / 1080.0f;
+	vec2 focus = vec2(0.5f, 0.0f);
+	pos = mapPoint(pos - focus);
 	
 	int maxLoop = (1<<8);
 	vec2 c = pos;
