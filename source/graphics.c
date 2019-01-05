@@ -296,6 +296,10 @@ void loadFunctionPointers()
     glAttachShader_FA = (PFNGLATTACHSHADERPROC)glXGetProcAddress((const unsigned char*)"glAttachShader");
     glDeleteShader_FA = (PFNGLDELETESHADERPROC)glXGetProcAddress((const unsigned char*)"glDeleteShader");
 
+    //NOTE(Stanisz13): UNIFORMS
+    glGetUniformLocation_FA = (PFNGLGETUNIFORMLOCATIONPROC)glXGetProcAddress((const unsigned char*)"glGetUniformLocation");
+    glUniform1f_FA = (PFNGLUNIFORM1FPROC)glXGetProcAddress((const unsigned char*)"glUniform1f");
+        
     //NOTE(Stanisz13): PROGRAMS
     glCreateProgram_FA = (PFNGLCREATEPROGRAMPROC)glXGetProcAddress((const unsigned char*)"glCreateProgram");
     glLinkProgram_FA = (PFNGLLINKPROGRAMPROC)glXGetProcAddress((const unsigned char*)"glLinkProgram");

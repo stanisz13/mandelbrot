@@ -1,5 +1,6 @@
 #include "graphics.h"
 #include <math.h>
+#include <time.h>
 
 int isRunning = 1;
 
@@ -38,6 +39,9 @@ int main(int argc, char* argv[])
     glDisable(GL_DEPTH_TEST);
 
     disableVSyncIfPossible(&contextData, &userVSyncData);
+
+
+    float iter = 1.0f;
     
     while(1)
     {        
@@ -53,18 +57,6 @@ int main(int argc, char* argv[])
                         isRunning = 0;
                     break;
             }
-
-            glClearColor(0, 0.5, 1, 1);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-#if USE_EBO_TO_DRAW_QUAD == 1
-            glDrawElements(GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_INT, 0);
-#else
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-#endif
-        
-            glXSwapBuffers(contextData.display, contextData.window);
-
         }
 
         if (isRunning == 0)
@@ -72,6 +64,21 @@ int main(int argc, char* argv[])
             break;
         }
 
+        glClearColor(0, 0.5, 1, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        int zoomLoc = glGetUniformLocation(basic, "zoom");
+        glUniform1f_FA(zoomLoc, iter);
+
+        iter *= 1.2f;
+        
+#if USE_EBO_TO_DRAW_QUAD == 1
+        glDrawElements(GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_INT, 0);
+#else
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+#endif
+        
+        glXSwapBuffers(contextData.display, contextData.window);
         
         //sleep(1);
     }
