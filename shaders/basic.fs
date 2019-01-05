@@ -4,30 +4,44 @@ in vec2 posPass;
 
 out vec4 FragColor;
 
-const float aRatio = 1920.0f / 1080.0f;
-const float zoom = 2.0f;
+const float aRatio = 1080.0f / 1920.0f;
+
+float minRe = -1.0f;
+float maxRe = 1.0f;
+
+const float zoom = 1000.0f;
 
 vec2 mapPoint(const vec2 v)
 {
-	vec2 res;
-	res = v * 1.75f - 0.75f;
-	res.y += 0.75f;
-	res.y /= aRatio;
+       vec2 res;
 
-	res.y /= zoom;
-	res.x /= zoom;
+       float sumRe = maxRe + minRe;
+       
+       res = v * (maxRe - minRe)/2.0f + (sumRe / 2.0f);
+       res.y -= (sumRe) / 2.0f;
 
-	return res;
+       res.y *= aRatio;
+
+       res.y /= zoom;
+       res.x /= zoom;
+
+       return res;
 }
 
 void main()
 {
 	vec2 pos = posPass;
-	vec2 focus = vec2(0.5f, 0.0f);
-	pos = mapPoint(pos - focus);
+	vec2 focus = vec2(-0.1011f, 0.9563f);
+	vec2 focus2 = vec2(-0.7453f, 0.1127f);
+
+pos = mapPoint(pos);
+	//focus = mapPoint(focus);
+	pos += focus2;
 	
 	int maxLoop = (1<<8);
+	
 	vec2 c = pos;
+	
 	vec2 z = vec2(0.0f, 0.0f);
 	vec3 color = vec3(0.0f, 0.0f, 0.0f);
 	float escapeRadius = 2.0f;
@@ -57,7 +71,7 @@ void main()
 	float val2 = mix(0.0f, 1.0f, float(floor(i) + 1.0f)/maxLoop);
 
 	vec3 color1 = vec3(val2, 0.0f, 0.0f);
-	vec3 color2 = vec3(0.0f,val1/2.0f,  0.0f);
+	vec3 color2 = vec3(0.0f,val1/2.0f, 0.3f);
 	
 	color = mix(color1, color2, i / maxLoop);
 	//color.b = mix(0.0f, 1.0f, float(i)/maxLoop);
