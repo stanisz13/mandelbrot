@@ -42,6 +42,9 @@ int main(int argc, char* argv[])
 
 
     float iter = 1.0f;
+
+    clock_t prevTime = clock();
+    double dt = 0.0f;
     
     while(1)
     {        
@@ -67,10 +70,10 @@ int main(int argc, char* argv[])
         glClearColor(0, 0.5, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        int zoomLoc = glGetUniformLocation(basic, "zoom");
-        glUniform1f_FA(zoomLoc, iter);
+        int zoomLoc = glGetUniformLocation_FA(basic, "zoom");
+        glUniform1f_FA(zoomLoc, 10000);
 
-        iter *= 1.2f;
+        iter += 1.0f;
         
 #if USE_EBO_TO_DRAW_QUAD == 1
         glDrawElements(GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_INT, 0);
@@ -79,7 +82,10 @@ int main(int argc, char* argv[])
 #endif
         
         glXSwapBuffers(contextData.display, contextData.window);
-        
+
+        clock_t nowTime = clock();
+        dt = (nowTime - prevTime) *100000.0f / CLOCKS_PER_SEC;
+        prevTime = nowTime;
         //sleep(1);
     }
 

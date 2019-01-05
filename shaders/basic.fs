@@ -33,10 +33,11 @@ void main()
 	vec2 pos = posPass;
 	vec2 focus = vec2(-0.1011f, 0.9563f);
 	vec2 focus2 = vec2(-0.7453f, 0.1127f);
-
+	vec2 focus3 = vec2(-1.25066f, 0.02012f);
+	
 	pos = mapPoint(pos);
 
-	pos += focus2;
+	pos += focus3;
 	
 	int maxLoop = (1<<8);
 	
