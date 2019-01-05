@@ -32,7 +32,8 @@ void main()
 		float diff = z.x*z.x + z.y*z.y; 
 		float log_zn = log(diff) / 2.0f;
 		const float two = 2.0f;
-		float nu = log( log_zn / log(two) ) / log(two);
+		float logTwo = log(two);
+		float nu = log( log_zn / logTwo ) / logTwo;
 
 		i = i + 1 - nu;
 	}
